@@ -1,3 +1,22 @@
+
+
+
+
+'''
+In this application the you will be translating the given text in any language you want ,
+for this we had google translator will provide you the translation and also we have provided
+google text to speach to,clearify what is written in translation ...
+
+"""Main Requirement"""
+Internet Connection
+
+
+'''
+#All the required librarires are place here 
+
+
+
+
 from tkinter import *
 from tkinter.ttk import Combobox
 from googletrans import Translator
@@ -10,14 +29,26 @@ import pyglet
 from PyDictionary import *
 from playsound import playsound
 
-class translate:
+
+
+
+
+
+
+
+
+class Translate:
     def __init__(self,root):
         self.root=root
         self.root.title("Translate")
         self.root.geometry("500x505")
         self.root.resizable(0,0)
-        #self.root.iconbitmap("img.ico")
+        self.root.iconbitmap("img.ico")
 
+
+
+        
+        
         to_TRANS_lan=StringVar()
         select=StringVar()
         TRANSl=StringVar()
@@ -61,6 +92,11 @@ class translate:
             except:
                 tkinter.messagebox.askretrycancel("Internet Error","INTERNET CONNECTION MAY GONE OR LANGUAGE ERROR",icon="info")
 
+
+        def thread_trans():
+            t1=threading.Thread(target=trans)
+            t1.start()
+
         def speak():
             try:
                 
@@ -73,6 +109,11 @@ class translate:
                 
             except:
                 tkinter.messagebox.askretrycancel("Internet Error","INTERNET CONNECTION MAY GONE OR LANGUAGE ERROR",icon="info")
+
+
+        def thread_speak():
+            t1=threading.Thread(target=speak)
+            t1.start()
 
 
             
@@ -119,13 +160,13 @@ class translate:
 
 
 #-----------------------------------------------------------------
-        but_tran=Button(frame2,text="Translate",width=13,font=('times new roman',11,'bold'),height=0,cursor="hand2",command=trans)
+        but_tran=Button(frame2,text="Translate",width=13,font=('times new roman',11,'bold'),height=0,cursor="hand2",command=thread_trans)
         but_tran.place(x=180,y=25)
         but_tran.bind("<Enter>",on_enter1)
         but_tran.bind("<Leave>",on_leave1)
 
 
-        but_listen=Button(frame2,text="Listen",width=13,font=('times new roman',11,'bold'),height=0,cursor="hand2",command=speak)
+        but_listen=Button(frame2,text="Listen",width=13,font=('times new roman',11,'bold'),height=0,cursor="hand2",command=thread_speak)
         but_listen.place(x=350,y=25)
         but_listen.bind("<Enter>",on_enter2)
         but_listen.bind("<Leave>",on_leave2)
@@ -171,5 +212,5 @@ class translate:
 
 if __name__ == "__main__":
     root=Tk()
-    app=translate(root)
+    app=Translate(root)
     root.mainloop()
